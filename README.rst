@@ -28,11 +28,11 @@ Use the command line help messages for descriptions on how to use the functions.
 
     Please contribute! Please make pull requests directly to master. Before making a pull request, please:
 
-    * Ensure that all new functionality is covered by unit tests.
+    * Ensure that all new functionality is covered by unit tests (pytest).
     * Verify that all unit tests are passing.
-    * Ensure that all functionality is properly documented.t
-    * Ensure that all functions/classes have proper docstrings so sphinx can autogenerate documentation.
-    * Fix all versions in setup.py (and requirements.txt)
+    * Ensure that all functionality is properly documented. (Mkdocs will be added soon.)
+    * Ensure that all functions/classes have proper docstrings.
+    * Create Pull Request.
 
     **Run Tests**
 
@@ -51,6 +51,6 @@ Use the command line help messages for descriptions on how to use the functions.
     To create a new version::
 
         bumpversion ( major | minor | patch )
-        git push --tags
+        git push --tags (may not be required, ie - SourceTree)
 
     Don't forget to update the changelog and upload to pypi.
