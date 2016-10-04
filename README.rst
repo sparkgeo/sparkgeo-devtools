@@ -9,14 +9,18 @@ Installation
 
 Instal via PyPi
 
->>> $ pip install sparkgeo_devtools
+.. code-block::
+
+  pip install sparkgeo_devtools
 
 Usage
 -----
 
 Use the command line help messages for descriptions on how to use the functions.
 
->>> $ sparkgeo --help
+.. code-block::
+
+  sparkgeo --help
 
 
 Development
@@ -46,7 +50,7 @@ Tests use `pytest`_ framework
 
 **Create a new version**
 
-To create a new version::
+To create a new version:
 
 .. code-block::
 
