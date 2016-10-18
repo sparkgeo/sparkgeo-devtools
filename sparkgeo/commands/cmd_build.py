@@ -4,7 +4,7 @@ from sparkgeo import pass_context, create_group
 
 # Required for dynamic import
 cli = create_group(
-    'deploy', 'Build commands for use with different platforms, such as: Docker, Go, Python'
+    'build', 'Deployment commands for use with different platforms, such as: Elastic Beanstalk, etc'
 )
 
 """EXAMPLES:
@@ -29,13 +29,27 @@ cli = create_group(
 
 @cli.command()
 @pass_context
-def create_eb_archive(ctx):
+def get_go_commondevtools(ctx):
     """Build an archive for deploying to Elastic Beanstalk"""
     pass
 
 
 @cli.command()
 @pass_context
-def deploy_eb_version(ctx):
+def get_gogb_dependencies(ctx):
+    """Create a new version and update Elastic Beanstalk"""
+    pass
+
+
+@cli.command()
+@pass_context
+def build_go_binary(ctx):
+    """Create a new version and update Elastic Beanstalk"""
+    pass
+
+
+@cli.command()
+@pass_context
+def build_docker_img(ctx):
     """Create a new version and update Elastic Beanstalk"""
     pass

@@ -8,9 +8,9 @@ class CommandContext(object):
     Class to encapsulate common session context for the cli commands.
     """
 
-    def __init__(self):
-        # self.session = gbdx_auth.get_session()
-        # self.gbdx = Interface(gbdx_connection=self.session)
+    # def __init__(self):
+    #     self.session = gbdx_auth.get_session()
+    #     self.gbdx = Interface(gbdx_connection=self.session)
 
     # def get(self, url):
     #     return self.session.get(url)
@@ -26,7 +26,7 @@ class CommandContext(object):
     # def delete(self, url):
     #     return self.session.delete(url)
 
-    def log_(self, msg, error=False, *args):
+    def log(self, msg, error=False, *args):
         """Logs a message to stdout or stderr."""
         if args:
             msg %= args

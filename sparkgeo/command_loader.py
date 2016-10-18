@@ -6,7 +6,9 @@ import os
 import sys
 
 
-plugin_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), 'commands'))
+PLUGIN_FOLDER = os.path.abspath(os.path.join(os.path.dirname(__file__), 'commands'))
+MODULE = 'sparkgeo.commands.'
+
 
 class CommandLoader(click.MultiCommand):
 
@@ -14,7 +16,7 @@ class CommandLoader(click.MultiCommand):
 
     def list_commands(self, ctx):
         rv = []
-        for filename in os.listdir(plugin_folder):
+        for filename in os.listdir(PLUGIN_FOLDER):
             if filename.endswith('.py') and \
                filename.startswith(self.COMMAND_FILE_PREFIX):
                 rv.append(filename[len(self.COMMAND_FILE_PREFIX):-3])
@@ -25,7 +27,7 @@ class CommandLoader(click.MultiCommand):
         try:
             if sys.version_info[0] == 2:
                 name = name.encode('ascii', 'replace')
-            mod = __import__('gbdxcli.commands.cmd_' + name,
+            mod = __import__('%scmd_%s' % (MODULE, name),
                              None, None, ['cli'])
         except ImportError as e:
             print e
