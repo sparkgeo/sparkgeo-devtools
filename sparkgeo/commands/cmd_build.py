@@ -1,5 +1,8 @@
 import json
-from sparkgeo import pass_context, create_group
+import os
+from sparkgeo import pass_context, create_group, click
+from sparkgeo import context
+from fabric.api import local, cd
 
 
 # Required for dynamic import
@@ -28,28 +31,77 @@ cli = create_group(
 
 
 @cli.command()
-@pass_context
-def get_go_commondevtools(ctx):
+def get_go_commondevtools():
     """Build an archive for deploying to Elastic Beanstalk"""
     pass
 
 
 @cli.command()
-@pass_context
-def get_gogb_dependencies(ctx):
-    """Create a new version and update Elastic Beanstalk"""
+def get_gogb_dependencies(subdir):
+    """Download and install Service Go dependencies."""
     pass
 
 
 @cli.command()
-@pass_context
-def build_go_binary(ctx):
-    """Create a new version and update Elastic Beanstalk"""
-    pass
+@click.option('--subdir', '-d',
+              type=click.Path(exists=True, file_okay=False, readable=False),
+              help="Subdirectory where the go src code is located, if required.")
+def goget(subdir):
+    """Download Go dependencies."""
+    with cd(subdir):
+        local("go get -v -d")
 
 
 @cli.command()
-@pass_context
-def build_docker_img(ctx):
+@click.option('--subdir', '-d',
+              type=click.Path(exists=True, file_okay=False, readable=False),
+              help="Subdirectory where the go src code is located, if required.")
+@click.option('--name', '-n',
+              type=click.STRING,
+              help="Name of the build binary")
+def build_go_binary(sub_dir, name):
     """Create a new version and update Elastic Beanstalk"""
-    pass
+    with cd(sub_dir):
+        local("""docker run --rm -it \
+            -v "/home/ubuntu/.go_workspace":/gopath \
+            -v "$(pwd)":/app \
+            -e "GOPATH=/gopath" -w /app \
+            golang:1.6.3-alpine \
+            sh -c 'CGO_ENABLED=0 go build -a --installsuffix cgo --ldflags="-s" -o %s'
+        """ % name)
+
+
+@cli.command()
+@click.option('--input-file', '-i',
+              type=click.File('r'),
+              help="Dockerfile name, relative to current working dir")
+@click.option('--output-file', '-o',
+              type=click.File('w'),
+              help="Dockerfile name, relative to current working dir")
+@click.option('--attr', '-a',
+              type=(str, str), multiple=True,
+              help=""
+              )
+def dockerfile_inject_envvars(input_file, output_file, attr):
+    """Substitute the attrs into the dockerfile as env vars
+
+    This function will iterate through attr, for each tuple, the Dockerfile will be searched for
+    %(attr[0])s. If that doesn't exist, no substitutions will be done.
+    """
+    attrs = dict(attr)
+
+    data = input_file.read() % attrs
+
+    output_file.write(data)
+
+
+@cli.command()
+@click.option('--img-tag', '-t',
+              type=click.STRING,
+              help="Name of image to build")
+@click.option('--filename', '-f',
+              type=click.Path(exists=True),
+              help="Dockerfile name, relative to current working dir")
+def build_docker_img(img_tag, filename):
+    """Create a  and update Elastic Beanstalk"""
+    local("docker build -t %s -f %s --no-cache ." % (img_tag, filename))

@@ -42,3 +42,7 @@ class CommandContext(object):
             click.echo(json.dumps(data, sort_keys=sort, indent=4, separators=(',', ': ')))
         else:
             click.echo(data)
+
+
+class InvalidPathError(Exception):
+    pass
