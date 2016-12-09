@@ -11,7 +11,8 @@ machine:
 dependencies:
     pre:
         - pip install -U awscli boto3 setuptools
-        - pip install -e .
+    post:
+        - sparkgeo --help
 
 
 #deployment:
