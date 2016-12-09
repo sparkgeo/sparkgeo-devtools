@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name='sparkgeo-devtools',
@@ -7,7 +7,7 @@ setup(
         'Click',
         'fabric',
     ],
-    packages=['sparkgeo'],
+    packages=find_packages(),
     entry_points='''
         [console_scripts]
         sparkgeo=sparkgeo.main:cli
