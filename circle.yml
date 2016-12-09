@@ -1,0 +1,21 @@
+general:
+    branches:
+        only:
+            - master
+            - dev
+
+machine:
+    services:
+        - docker
+
+dependencies:
+    pre:
+        - pip install -U awscli boto3 setuptools
+        - pip install -e .
+
+
+#deployment:
+#    prod:
+#        branch: master
+#        commands:
+#            - Push to pypi

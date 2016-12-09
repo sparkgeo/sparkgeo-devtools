@@ -1,2 +1,2 @@
 click>=6.6
-fabric>=1.12
+fabric>=1.12.0

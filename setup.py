@@ -5,7 +5,7 @@ setup(
     version='0.0.1',
     install_requires=[
         'Click',
-
+        'fabric',
     ],
     packages=['sparkgeo'],
     entry_points='''
