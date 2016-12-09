@@ -13,6 +13,7 @@ dependencies:
         - pip install -U awscli boto3 setuptools
     post:
         - sparkgeo --help
+        - sparkgeo build dockerfile_inject_envvars -i test/Dockerfile -o test_docker -a (my_key,asdf) (port,5432)
 
 
 #deployment:
